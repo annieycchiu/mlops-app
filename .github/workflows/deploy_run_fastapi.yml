@@ -37,7 +37,8 @@ jobs:
       # Download files from GCP bucket
       - name: Download Files from GCP Bucket
         run: |
-          gsutil cp gs://${{ env.BUCKET_NAME }}/${{ env.FILE_PATH }} ./app
+          gsutil cp gs://${{ env.BUCKET_NAME }}/gaming_clf.pkl ./app
+          gsutil cp gs://${{ env.BUCKET_NAME }}/preprocessor.pkl ./app
 
       # Authenticate Docker to Google Cloud Artifact Registry
       - name: Docker Auth
