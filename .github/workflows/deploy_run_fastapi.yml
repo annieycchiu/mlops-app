@@ -37,15 +37,11 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: Move to fastapi Directory
-        run: |
-          cd fastapi
-
       # Download files from GCP bucket
       - name: Download Files from GCP Bucket
         run: |
-          gsutil cp gs://${{ env.BUCKET_NAME }}/gaming_clf.pkl ./app
-          gsutil cp gs://${{ env.BUCKET_NAME }}/preprocessor.pkl ./app
+          gsutil cp gs://${{ env.BUCKET_NAME }}/gaming_clf.pkl ./fastapi/app
+          gsutil cp gs://${{ env.BUCKET_NAME }}/preprocessor.pkl ./fastapi/app
 
       # Authenticate Docker to Google Cloud Artifact Registry
       - name: Docker Auth
@@ -58,6 +54,7 @@ jobs:
 
       - name: Build and Push Container
         run: |-
+          cd fastapi
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}" .
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}"
 
