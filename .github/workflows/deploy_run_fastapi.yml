@@ -39,16 +39,10 @@ jobs:
           password: '${{ steps.auth.outputs.access_token }}'
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
-      # - name: Docker config
-      #   run: |-
-      #     gcloud auth configure-docker ${{ env.GAR_LOCATION }}-docker.pkg.dev
-
       - name: Build and Push Container
         run: |-
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}" .
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}"
-
-      # END - Docker auth and build
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -56,5 +50,5 @@ jobs:
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}
+          args: '--allow-unauthenticated'
