@@ -2,7 +2,10 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+        - 'main'
+    paths:
+        - 'fastapi/**'
 
 env:
   PROJECT_ID: my-sixth-project-431318 # Google Cloud project id
