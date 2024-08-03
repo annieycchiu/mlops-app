@@ -5,14 +5,15 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_ID: my-sixth-project-431318 # TODO: update Google Cloud project id
-  GAR_LOCATION: us-west1 # TODO: update Artifact Registry location
-  SERVICE: fastapi-app # TODO: update Cloud Run service name
-  REGION: us-west1 # TODO: update Cloud Run service region
+  PROJECT_ID: my-sixth-project-431318 # Google Cloud project id
+  GAR_LOCATION: us-west1 # Artifact Registry location
+  SERVICE: fastapi-app # Cloud Run service name
+  REGION: us-west1 # Cloud Run service region
+  BUCKET_NAME: my-best-model # GCP bucket name
+  FILE_PATH: gaming_clf.pkl # Path in the bucket to the file you want to download
 
 jobs:
   deploy:
-    # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -29,6 +30,14 @@ jobs:
           token_format: 'access_token'
           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
           service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      # Download files from GCP bucket
+      - name: Download Files from GCP Bucket
+        run: |
+          gsutil cp gs://${{ env.BUCKET_NAME }}/${{ env.FILE_PATH }} ./app
 
       # Authenticate Docker to Google Cloud Artifact Registry
       - name: Docker Auth
