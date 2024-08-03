@@ -37,6 +37,10 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
+      - name: Move to fastapi Directory
+        run: |
+          cd fastapi
+
       # Download files from GCP bucket
       - name: Download Files from GCP Bucket
         run: |
