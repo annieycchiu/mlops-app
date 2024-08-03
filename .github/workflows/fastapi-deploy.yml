@@ -1,4 +1,4 @@
-name: Build and Deploy to Cloud Run
+name: Build and Deploy FastAPI to Cloud Run
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
         - 'main'
     paths:
         - 'fastapi/**'
+        - '.github/workflows/fastapi-deploy.yml'
 
 env:
   PROJECT_ID: my-sixth-project-431318 # Google Cloud project id
