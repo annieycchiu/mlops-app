@@ -53,7 +53,6 @@ jobs:
         gcloud run deploy "${{ env.SERVICE_NAME }}" \
           --image "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}" \
           --region "${{ env.REGION }}" \
-          --service-account "${{ secrets.WIF_SERVICE_ACCOUNT }}" \
           --update-secrets=POSTGRESQL_URL=database_url:latest \
           --update-secrets=STORAGE_URL=bucket_url:latest \
           --memory 2Gi \
