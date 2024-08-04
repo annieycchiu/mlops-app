@@ -47,12 +47,15 @@ jobs:
       run: |-
         cd mlflow
         docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}"
-    
-    - name: Deploy Google Cloud Run
-      run: |
-        gcloud run deploy "${{ env.SERVICE_NAME }}" \
-          --image "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}" \
-          --region "${{ env.REGION }}" \
+
+    - name: Deploy to Google Cloud Run
+      id: deploy
+      uses: google-github-actions/deploy-cloudrun@v1
+      with:
+        service: ${{ env.SERVICE_NAME }}
+        region: ${{ env.REGION }}
+        image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}
+        flags: >
           --update-secrets=POSTGRESQL_URL=database_url:latest \
           --update-secrets=STORAGE_URL=bucket_url:latest \
           --memory 2Gi \
