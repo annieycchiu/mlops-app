@@ -8,21 +8,21 @@ on:
         - mlflow/**
         - .github/workflows/mlflow-deploy.yml
 
+env:
+      PROJECT_ID: my-sixth-project-431318  # Google Cloud project id
+      REPOSITORY: mlflow-server            # Artifact Registry name
+      GAR_LOCATION: us-west1               # Artifact Registry location
+      SERVICE: mlflow-server               # Cloud Run service name
+      REGION: us-west1                     # Cloud Run service region
+
 jobs:
   deploy:
     name: Deploy Mlflow
-    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
 
-    env:
-      PROJECT_ID: my-sixth-project-431318 # Google Cloud project id
-      REPOSITORY: mlflow-repo             # Artifact Registry name
-      GAR_LOCATION: us-west1              # Artifact Registry location
-      SERVICE: mlflow-server              # Cloud Run service name
-      REGION: us-west1                    # Cloud Run service region
-
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
