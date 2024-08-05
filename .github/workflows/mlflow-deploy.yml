@@ -1,4 +1,4 @@
-name: Deploy MLFlow Server
+name: Build and Deploy MLFlow Server to Cloud Run
 
 on:
   push:
@@ -17,10 +17,11 @@ jobs:
       id-token: write
 
     env:
-      REGION: us-central1
-      PROJECT_ID: my-sixth-project-431318
-      REPOSITORY: mlflow-repo
-      SERVICE_NAME: mlflow-server
+      PROJECT_ID: my-sixth-project-431318 # Google Cloud project id
+      REPOSITORY: mlflow-repo             # Artifact Registry name
+      GAR_LOCATION: us-west1              # Artifact Registry location
+      SERVICE: mlflow-server              # Cloud Run service name
+      REGION: us-west1                    # Cloud Run service region
 
     steps:
     - name: Checkout
@@ -41,21 +42,21 @@ jobs:
       with:
         username: oauth2accesstoken
         password: ${{ steps.auth.outputs.access_token }}
-        registry: ${{ env.REGION }}-docker.pkg.dev
+        registry: ${{ env.GAR_LOCATION }}-docker.pkg.dev
 
     - name: Build and Push Container
       run: |-
         cd mlflow
-        docker build -t "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}" .
-        docker push "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}"    
+        docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}" .
+        docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}"    
 
     - name: Deploy to Cloud Run
       id: deploy
       uses: google-github-actions/deploy-cloudrun@v1
       with:
-        service: ${{ env.SERVICE_NAME }}
+        service: ${{ env.SERVICE }}
         region: ${{ env.REGION }}
-        image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}
+        image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}
         flags: >
           --update-secrets=POSTGRESQL_URL=database_url:latest
           --update-secrets=STORAGE_URL=bucket_url:latest
