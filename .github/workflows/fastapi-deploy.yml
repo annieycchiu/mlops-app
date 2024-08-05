@@ -3,24 +3,25 @@ name: Build and Deploy FastAPI to Cloud Run
 on:
   push:
     branches: 
-        - 'main'
+        - main
     paths:
-        - 'fastapi/**'
-        - '.github/workflows/fastapi-deploy.yml'
+        - fastapi/**
+        - .github/workflows/fastapi-deploy.yml
 
 env:
-  PROJECT_ID: my-sixth-project-431318 # Google Cloud project id
-  GAR_LOCATION: us-west1 # Artifact Registry location
-  SERVICE: fastapi-app # Cloud Run service name
-  REGION: us-west1 # Cloud Run service region
-  BUCKET_NAME: my-best-model # GCP bucket name
-  FILE_PATH: gaming_clf.pkl # Path in the bucket to the file you want to download
+  PROJECT_ID: my-sixth-project-431318  # Google Cloud project id
+  REPOSITORY: fastapi-app              # Artifact Registry name
+  GAR_LOCATION: us-west1               # Artifact Registry location
+  SERVICE: fastapi-app                 # Cloud Run service name
+  REGION: us-west1                     # Cloud Run service region
+  BUCKET_NAME: my-best-model           # GCP bucket name
 
 jobs:
   deploy:
+    name: Deploy FastAPI
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: read
+      id-token: write
 
     runs-on: ubuntu-latest
     steps:
@@ -29,14 +30,14 @@ jobs:
 
       - name: Google Auth
         id: auth
-        uses: 'google-github-actions/auth@v1'
+        uses: google-github-actions/auth@v1
         with:
-          token_format: 'access_token'
-          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
-          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+          token_format: access_token
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}  # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}      # e.g. - my-service-account@my-project.iam.gserviceaccount.com
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
       # Download files from GCP bucket
       - name: Download Files from GCP Bucket
@@ -47,17 +48,17 @@ jobs:
       # Authenticate Docker to Google Cloud Artifact Registry
       - name: Docker Auth
         id: docker-auth
-        uses: 'docker/login-action@v1'
+        uses: docker/login-action@v1
         with:
-          username: 'oauth2accesstoken'
-          password: '${{ steps.auth.outputs.access_token }}'
-          registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+          registry: ${{ env.GAR_LOCATION }}-docker.pkg.dev
 
       - name: Build and Push Container
         run: |-
           cd fastapi
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}" .
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}"
+          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/fastapi:${{ github.sha }}" .
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/fastapi:${{ github.sha }}"
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -65,5 +66,5 @@ jobs:
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/my-fastapi-img:${{ github.sha }}
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/fastapi:${{ github.sha }}
           flags: '--allow-unauthenticated'
