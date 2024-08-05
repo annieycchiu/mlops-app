@@ -67,4 +67,5 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/fastapi:${{ github.sha }}
-          flags: '--allow-unauthenticated'
+          flags: >
+            --allow-unauthenticated

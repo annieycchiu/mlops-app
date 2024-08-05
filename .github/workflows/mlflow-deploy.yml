@@ -17,7 +17,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy Mlflow
+    name: Deploy MLflow
     permissions:
       contents: read
       id-token: write
