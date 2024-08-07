@@ -1,10 +1,10 @@
-project_id = "my-eighth-project-431723"
+project_id = "my-ninth-project-431822"
 region = "us-west1"
 
 service_account_id = "mlops-sa"
 
 # CI/CD
-github_repo = "annieycchiu/mlops-eighth"
+github_repo = "annieycchiu/mlops-app"
 
 # Database
 db_instance_name = "mlflow-instance"
@@ -20,4 +20,4 @@ model_ar_name = "fastapi-app"
 
 # Buckets
 mlflow_bucket_name = "my-mlflow-artifacts-bucket"
-model_bucket_name = "my-best-gaming-model"
+model_bucket_name = "mlops-project-best-model"
