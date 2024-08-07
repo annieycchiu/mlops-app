@@ -57,8 +57,8 @@ jobs:
         service: ${{ env.SERVICE }}
         region: ${{ env.REGION }}
         image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/mlflow:${{ github.sha }}
-        service-account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
         flags: >
+          --service-account=${{ secrets.WIF_SERVICE_ACCOUNT }}
           --update-secrets=POSTGRESQL_URL=database_url:latest
           --update-secrets=STORAGE_URL=bucket_url:latest
           --memory 2Gi
