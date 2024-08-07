@@ -9,12 +9,12 @@ on:
         - .github/workflows/fastapi-deploy.yml
 
 env:
-  PROJECT_ID: my-ninth-project-431822  # Google Cloud project id
-  REPOSITORY: fastapi-app              # Artifact Registry name
-  GAR_LOCATION: us-west1               # Artifact Registry location
-  SERVICE: fastapi-app                 # Cloud Run service name
-  REGION: us-west1                     # Cloud Run service region
-  BUCKET_NAME: my-best-model           # GCP bucket name
+  PROJECT_ID: my-ninth-project-431822    # Google Cloud project id
+  REPOSITORY: fastapi-app                # Artifact Registry name
+  GAR_LOCATION: us-west1                 # Artifact Registry location
+  SERVICE: fastapi-app                   # Cloud Run service name
+  REGION: us-west1                       # Cloud Run service region
+  BUCKET_NAME: mlops-project-best-model  # GCP bucket name
 
 jobs:
   deploy:
