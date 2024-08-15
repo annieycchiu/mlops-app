@@ -68,4 +68,5 @@ jobs:
           region: ${{ env.REGION }}
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/fastapi:${{ github.sha }}
           flags: >
+            --service-account=${{ secrets.WIF_SERVICE_ACCOUNT }}
             --allow-unauthenticated
