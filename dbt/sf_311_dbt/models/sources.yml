@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: sf_311
+    description: "San Francisco 311 service request data"
+    database: my-tenth-project-432516  # GCP Project ID
+    schema: test_dataset               # BigQuery Dataset Name
+    tables:
+      - name: 311_data 
+        description: "Raw data for 311 service requests in San Francisco"

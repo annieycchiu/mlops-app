@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: stg_sf_311_calls
+    columns:
+      - name: request_id
+        tests:
+          - unique
+          - not_null
+      - name: created_date
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['Open', 'Closed']
