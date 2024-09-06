@@ -50,7 +50,7 @@ The primary objectives of this project include:
 
 ## Results
 
-The final deployed model can be accessed via the API endpoint provided by GCP Cloud Run. The results of the model predictions, including accuracy and performance metrics, can be reviewed in the MLflow UI.
+The final deployed model is accessible through the API endpoint provided by GCP Cloud Run. Data is automatically fetched and ingested into the GCP BigQuery data warehouse on a daily schedule. Users can review the results of model predictions, along with accuracy and performance metrics, via the MLflow UI.
 
 ## Future Work
 
