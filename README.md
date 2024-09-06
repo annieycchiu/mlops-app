@@ -11,8 +11,8 @@
 [![MLflow](https://img.shields.io/badge/MLflow-007ACC?style=for-the-badge&logo=mlflow&logoColor=white)](https://mlflow.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-00C7B7?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
-![Architecture](assets/images/architecture.png)
-
 ## End-to-End Architecture
+
+![Architecture](assets/images/architecture.png)
 
 ## Tools & Technologies
