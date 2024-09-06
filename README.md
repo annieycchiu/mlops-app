@@ -32,7 +32,7 @@ The primary objectives of this project include:
 ## Project Structure
 
 <pre>
-    <div class="dark bg-gray-950 contain-inline-size rounded-md border-[0.5px] border-token-border-medium">
+    <div class="dark bg-gray-950 contain-inline-size rounded-md border-[0.25px] border-token-border-medium">
         <div class="overflow-y-auto p-4" dir="ltr">
             <code class="!whitespace-pre hljs language-bash">
                 ├── .github/             # GitHub Actions CI/CD workflows
