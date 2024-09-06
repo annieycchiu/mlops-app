@@ -14,5 +14,3 @@
 ## End-to-End Architecture
 
 ![Architecture](assets/images/architecture.png)
-
-## Tools & Technologies
