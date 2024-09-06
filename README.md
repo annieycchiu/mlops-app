@@ -29,17 +29,6 @@ The primary objectives of this project include:
 
 ![Architecture](assets/images/architecture.png)
 
-The architecture consists of:
-
-- **Terraform** : Provision GCP infrastructure (Cloud Run, BigQuery, Artifact Registry, SQL Database, Storage Buckets).
-- **MLflow** : Track experiments and manage models.
-- **GitHub Actions** : CI/CD pipeline to build and deploy Docker containers.
-- **Docker** : Containerize the FastAPI application for deployment.
-- **GCP Cloud Run** : Deploy the FastAPI application for scalable and serverless model serving.
-- **Prefect** : Manage and orchestrate ETL pipelines.
-- **dbt** : Transform data in BigQuery.
-- **BigQuery** : Store and query the dataset for training and inference.
-
 ## Project Structure
 
 <pre>
