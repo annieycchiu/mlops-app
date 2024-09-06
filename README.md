@@ -43,20 +43,20 @@ The architecture consists of:
 ## Project Structure
 
 <pre>
-<div class="dark bg-gray-950 contain-inline-size rounded-md border-[0.5px] border-token-border-medium">
-    <div class="overflow-y-auto p-4" dir="ltr">
-        <code class="!whitespace-pre hljs language-bash">
-            ├── .github/             # GitHub Actions CI/CD workflows
-            ├── assets/              # Project images
-            ├── dbt/                 # Data processing scripts and dbt models
-            ├── fastapi/             # FastAPI application
-            ├── mlflow/              # MLflow experiment scripts
-            ├── prefect/             # Prefect flows and tasks
-            ├── terraform/           # Terraform configuration files
-            └── README.md            # Project documentation
-        </code>
+    <div class="dark bg-gray-950 contain-inline-size rounded-md border-[0.5px] border-token-border-medium">
+        <div class="overflow-y-auto p-4" dir="ltr">
+            <code class="!whitespace-pre hljs language-bash">
+                ├── .github/             # GitHub Actions CI/CD workflows
+                ├── assets/              # Project images
+                ├── dbt/                 # Data processing scripts and dbt models
+                ├── fastapi/             # FastAPI application
+                ├── mlflow/              # MLflow experiment scripts
+                ├── prefect/             # Prefect flows and tasks
+                ├── terraform/           # Terraform configuration files
+                └── README.md            # Project documentation
+            </code>
+        </div>
     </div>
-</div>
 </pre>
 
 ## Results
